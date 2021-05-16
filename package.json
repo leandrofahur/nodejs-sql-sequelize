@@ -1,0 +1,32 @@
+{
+  "name": "nodejs-sql-sequelize",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "make-model": "npx sequelize-cli model:generate --name User --attributes email:string",
+    "make-seed": "npx sequelize-cli seed:generate --name demo-user",
+    "migrate": "npx sequelize-cli db:migrate",
+    "down": "npx sequelize-cli db:migrate:undo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leandrofahur/nodejs-sql-sequelize.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leandrofahur/nodejs-sql-sequelize/issues"
+  },
+  "homepage": "https://github.com/leandrofahur/nodejs-sql-sequelize#readme",
+  "dependencies": {
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
+  }
+}
