@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const database = require("./util/database");
-const Product = require("./models/product");
+// const Product = require("./models/product");
 
 // Test db:
 database
@@ -14,11 +14,11 @@ database
   })
   .catch((error) => console.error(error.message));
 
-// testing with a query:
-database
-  .query("SELECT * FROM products")
-  .then((result) => console.log(result[0]))
-  .catch((error) => console.error(error.message));
+// // testing with a query:
+// database
+//   .query("SELECT * FROM products")
+//   .then(([rows, fieldData]) => console.log(rows))
+//   .catch((error) => console.error(error.message));
 
 const errorController = require("./controllers/error");
 
