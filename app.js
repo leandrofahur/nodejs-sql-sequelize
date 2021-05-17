@@ -1,23 +1,43 @@
 const path = require("path");
-const express = require("express");
-const expressHandlebars = require("express-handlebars");
 
-const db = require("./config/db");
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const database = require("./util/database");
+const Product = require("./models/product");
 
 // Test db:
-db.authenticate()
-  .then(() => console.log("Database connected"))
-  .catch((error) => console.error(error));
+database
+  .authenticate()
+  .then(() => {
+    console.log("Connected to database");
+  })
+  .catch((error) => console.error(error.message));
+
+// testing with a query:
+database
+  .query("SELECT * FROM products")
+  .then((result) => console.log(result[0]))
+  .catch((error) => console.error(error.message));
+
+const errorController = require("./controllers/error");
 
 const app = express();
-app.use(express.json({ extended: false }));
-app.use("/gigs", require("./routes/gigs"));
 
-app.get("/", (req, res) => {
-  res.send("INDEX");
-});
+app.set("view engine", "ejs");
+app.set("views", "views");
 
-const PORT = process.env.PORT | 5000;
-app.listen(PORT, () => {
-  console.log(`Server up and running on port ${PORT}`);
-});
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const { error } = require("console");
+const { compile } = require("pug");
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/admin", adminRoutes);
+app.use(shopRoutes);
+
+app.use(errorController.get404);
+
+app.listen(3000);
